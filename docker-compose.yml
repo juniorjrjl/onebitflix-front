@@ -4,11 +4,13 @@ services:
     build:
       context: .
     ports:
-    - '3000:3000'
+    - '3001:3001'
     volumes:
     - .:/onebitflix-front
     command: bash start.sh
     stdin_open: true
+    environment:
+      - NEXT_PUBLIC_BASEURL=http://api:3000
     networks:
       - onebitflix-net
 
