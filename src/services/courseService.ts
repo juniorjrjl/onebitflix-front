@@ -1,34 +1,30 @@
-import { AxiosResponse } from "axios";
-import api from "./api";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import api, { ErrorType } from "./api";
 
-export type EpisodeType ={
+
+export type NewestCourse = {
     id: number
     name: string
     synopsis: string
-    order: number
-    videoUrl: string
-    secondsLong: number
-}
-
-export type CourseType = {
-    id: number
-    name: string
     thumbnailUrl: string
-    synopsis: string
-    episodes?: EpisodeType[]
+    featured: boolean
+    CategoryId: number
+    createdAt: Date
+    updatedAt: Date
 };
 
 const courseService ={
 
     getNewest :async () => {
         try{
-            const res = await api.get('/courses/newest')
+            const res = await api.get<AxiosResponse<NewestCourse[]>>('/courses/newest')
             return res
-        }catch(err){
-            console.log(err.response.status)
-            return err.response
-        }
+        } catch(err) {
+            if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
 
+            console.error(err.response!.status)
+            return err.response!
+        }
     }
 
 }

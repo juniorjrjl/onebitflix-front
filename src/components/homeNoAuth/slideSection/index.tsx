@@ -1,18 +1,18 @@
 import Link from 'next/link'
 import { Button, Container } from 'reactstrap'
-import { CourseType } from '../../../services/courseService'
+import { NewestCourse } from '../../../services/courseService'
 import SlideComponent from '../../common/slideComponent'
 import styles from './styles.module.scss'
 
 
 interface props{
-    newestCourses: CourseType[]
+    newestCourses: NewestCourse[]
 }
 
 const slideSection = ({newestCourses}: props) =>{
     return(
         <>
-            <Container>
+            <Container className='d-flex flex-column align-items-center py-5'>
                 <p className={styles.sectionTitle}>AULAS JÁ DISPONÍVEIS</p>
                 <SlideComponent courses={newestCourses}></SlideComponent>
                 <Link href='/register'>

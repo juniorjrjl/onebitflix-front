@@ -11,6 +11,7 @@ services:
     stdin_open: true
     environment:
       - NEXT_PUBLIC_BASEURL=http://api:3000
+      - STATIC_FILES_BASEURL=http://localhost:3000
     networks:
       - onebitflix-net
 
