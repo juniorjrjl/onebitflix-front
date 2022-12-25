@@ -16,6 +16,11 @@ Api de vagas de emprego
 
 ## Executando a aplicação
 
+crie a network configurada no docker-compose.yml (onebitflix-net) usando o seguinte comando:
+
+```
+docker network create "onebitflix-net"
+``
 rode o seguinte comando no terminal:
 
 ```

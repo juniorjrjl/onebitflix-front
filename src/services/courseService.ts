@@ -22,7 +22,7 @@ const courseService ={
         } catch(err) {
             if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
 
-            console.error(err.response!.status)
+            console.error(err)
             return err.response!
         }
     }
