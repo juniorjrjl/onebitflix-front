@@ -17,7 +17,7 @@ const courseService ={
 
     getNewest :async () => {
         try{
-            const res = await api.get<AxiosResponse<NewestCourse[]>>('/courses/newest')
+            const res = await api.get<AxiosResponse<NewestCourse[]>>(`${process.env.NEXT_PUBLIC_BASEURL_INTERNAL!}/courses/newest`)
             return res
         } catch(err) {
             if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err

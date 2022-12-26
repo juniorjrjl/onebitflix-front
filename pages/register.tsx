@@ -26,7 +26,7 @@ const register = () =>{
             return
         }
         const res = await authService.register(params)
-
+        
         if (res.status === 201){
             alert("Sucesso")
         }else{
