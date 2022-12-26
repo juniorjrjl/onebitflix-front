@@ -3,12 +3,18 @@ import Head from 'next/head'
 import HeaderGeneric from '../src/components/common/headerGeneric'
 import { Form, FormGroup, Label, Container, Button, Input } from 'reactstrap'
 import Footer from '../src/components/common/footer'
-import { FormEvent } from 'react'
+import { FormEvent, useState } from 'react'
 import authService, { Register } from '../src/services/authService'
 import axios, { AxiosError } from 'axios'
 import { ErrorType } from '../src/services/api'
+import { useRouter } from 'next/router'
+import ToastComponent from '../src/components/common/toast'
 
 const register = () =>{
+    const router = useRouter()
+    const [toastIsOpen, setToastIsOpen] = useState(false)
+    const [toastMessage, setToastMessage] = useState('')
+    const [toastColor, setToastColor] = useState('danger')
     const handleRegister =async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
@@ -22,15 +28,27 @@ const register = () =>{
         const passwordVerifier = formData.get('passwordVerifier')!.toString()
         const params = { firstName, lastName, email, password, phone, birth }
         if (password !== passwordVerifier){
-            alert("A senha e confirmação são diferentes")
+            setToastIsOpen(true)
+            setTimeout(() => {
+                setToastIsOpen(false)
+            }, 1000 * 3)
+            setToastMessage("A senha e confirmação são diferentes")
+
             return
         }
         const res = await authService.register(params)
         
         if (res.status === 201){
-            alert("Sucesso")
+            router.push('/login?registred=true')
         }else{
-            if(axios.isAxiosError<AxiosError<ErrorType>>(res)) alert(res.message)
+            if(axios.isAxiosError<AxiosError<ErrorType>>(res)){
+                setToastIsOpen(true)
+                setTimeout(() => {
+                    setToastIsOpen(false)
+                }, 1000 * 3)
+                setToastMessage(res.message)
+            }
+            
         }
     }
     return(
@@ -81,6 +99,7 @@ const register = () =>{
                     </Form>
                 </Container>
                 <Footer />
+                <ToastComponent color={toastColor} isOpen={toastIsOpen} message={toastMessage}/>
             </main>
         </>
     )
