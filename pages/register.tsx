@@ -3,7 +3,7 @@ import Head from 'next/head'
 import HeaderGeneric from '../src/components/common/headerGeneric'
 import { Form, FormGroup, Label, Container, Button, Input } from 'reactstrap'
 import Footer from '../src/components/common/footer'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import authService, { Register } from '../src/services/authService'
 import axios, { AxiosError } from 'axios'
 import { ErrorType } from '../src/services/api'
@@ -15,6 +15,13 @@ const register = () =>{
     const [toastIsOpen, setToastIsOpen] = useState(false)
     const [toastMessage, setToastMessage] = useState('')
     const [toastColor, setToastColor] = useState('danger')
+
+    useEffect(() => {
+        if (sessionStorage.getItem("onebitflix-token")) {
+            router.push("/home");
+        }
+    }, []);
+
     const handleRegister =async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
