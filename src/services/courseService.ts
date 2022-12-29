@@ -26,7 +26,19 @@ export type FeaturedCourse ={
 
 const courseService ={
 
-    getNewest :async () => {
+    getNewestLogged :async () => {
+        try{
+            const res = await api.get<AxiosResponse<NewestCourse[]>>('/courses/newest')
+            return res
+        } catch(err) {
+            if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
+
+            console.error(err)
+            return err.response!
+        }
+    },
+
+    getNewest :async () => {// used inside docker
         try{
             const res = await api.get<AxiosResponse<NewestCourse[]>>(`${process.env.NEXT_PUBLIC_BASEURL_INTERNAL!}/courses/newest`)
             return res
