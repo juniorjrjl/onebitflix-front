@@ -45,7 +45,6 @@ const courseService ={
         } catch(err) {
             if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
 
-            console.error(err)
             return err.response!
         }
     },
@@ -58,7 +57,42 @@ const courseService ={
         } catch(err) {
             if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
 
-            console.error(err)
+            return err.response!
+        }
+    },
+
+    addToFav: async (courseId: number | string) =>{
+        try{
+            const Authorization = `Bearer ${sessionStorage.getItem("onebitflix-token")}`
+            const res = await api.post("/favorites", {headers: { Authorization }, data: {courseId}})
+            return res
+        } catch(err) {
+            if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
+
+            return err.response!
+        }
+    },
+
+    removeFav: async (courseId: number | string) =>{
+        try{
+            const Authorization = `Bearer ${sessionStorage.getItem("onebitflix-token")}`
+            const res = await api.delete(`/favorites/${courseId}`, {headers: { Authorization }})
+            return res
+        } catch(err) {
+            if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
+
+            return err.response!
+        }
+    },
+
+    getFavs: async () =>{
+        try{
+            const Authorization = `Bearer ${sessionStorage.getItem("onebitflix-token")}`
+            const res = await api.get('/favorites', {headers: { Authorization }})
+            return res
+        } catch(err) {
+            if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
+
             return err.response!
         }
     }
