@@ -9,4 +9,11 @@ export type ErrorType ={
     message: string
 }
 
+export type Page<T> = {
+    page: number
+    perPage: number
+    total: number
+    content: Array<T>
+}
+
 export default api;

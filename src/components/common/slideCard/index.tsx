@@ -1,15 +1,16 @@
 import styles from './styles.module.scss'
-import { NewestCourse } from '../../../services/courseService'
+
 import Link from 'next/link'
+import { Couresslide } from '../slideComponent'
 
 interface props {
-    course: NewestCourse
+    course: Couresslide
 }
 
 const slideCard = ({course}: props) =>{
     return(
         <>
-            <Link href={`/courses/${course.id}`}>
+            <Link href={`/courses/${course.id}`} className={styles.slideLink}>
                 <div className={styles.slide}>
                     <img className={styles.slideImg} src={`${process.env.NEXT_PUBLIC_BASEURL!}/${course.thumbnailUrl}`} alt={course.name} />
                     <p className={styles.slideTitle}>{course.name}</p>
