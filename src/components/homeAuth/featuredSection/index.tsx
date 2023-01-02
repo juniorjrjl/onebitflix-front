@@ -4,11 +4,12 @@ import courseService, { FeaturedCourse } from '../../../services/courseService'
 import HeaderAuth from '../../common/headerAuth';
 import { Button, Container } from 'reactstrap';
 import Link from 'next/link';
+import SpinnerComponent from '../../common/spiner';
 
 const FeaturedSection = () => {
     const { data, error } = useSWR('/featured', courseService.getFeatured)
     if (error) return error
-    if (!data) return (<><p>Loading...</p></>)
+    if (!data) return (<SpinnerComponent />)
     return(
         <>
             {

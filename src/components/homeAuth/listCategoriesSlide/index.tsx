@@ -2,6 +2,7 @@ import styles from '../../../../styles/slideCategory.module.scss'
 import useSWR from 'swr'
 import categoriesService, { CourseFromCategory } from '../../../services/categoriesService'
 import SlideComponent from '../../common/slideComponent'
+import SpinnerComponent from '../../common/spiner'
 
 interface proos {
     categoryId: number
@@ -12,7 +13,7 @@ const ListCategoriesSlide = ({ categoryId, categoryName}: proos) =>{
     const { data, error } = useSWR(`/categoriesCourses/${categoryId}`, () => categoriesService.getWithCourses(categoryId))
 
     if (error) return error
-    if (!data) return (<><p>Loading...</p></>)
+    if (!data) return (<SpinnerComponent />)
 
     return (
         ('Courses' in data.data && data.data.Courses instanceof Array<CourseFromCategory>) ?
