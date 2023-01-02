@@ -28,7 +28,7 @@ const courseService ={
 
     getNewestLogged :async () => {
         try{
-            const res = await api.get<AxiosResponse<NewestCourse[]>>('/courses/newest')
+            const res = await api.get<NewestCourse[], AxiosResponse<NewestCourse[]>>('/courses/newest')
             return res
         } catch(err) {
             if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
@@ -40,7 +40,7 @@ const courseService ={
 
     getNewest :async () => {// used inside docker
         try{
-            const res = await api.get<AxiosResponse<NewestCourse[]>>(`${process.env.NEXT_PUBLIC_BASEURL_INTERNAL!}/courses/newest`)
+            const res = await api.get<NewestCourse[], AxiosResponse<NewestCourse[]>>(`${process.env.NEXT_PUBLIC_BASEURL_INTERNAL!}/courses/newest`)
             return res
         } catch(err) {
             if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
@@ -52,7 +52,7 @@ const courseService ={
     getFeatured : async () => {
         try{
             const Authorization = `Bearer ${sessionStorage.getItem("onebitflix-token")}`
-            const res = await api.get<AxiosResponse<FeaturedCourse[]>>(`/courses/featured`,{headers: { Authorization }})
+            const res = await api.get<FeaturedCourse[], AxiosResponse<FeaturedCourse[]>>(`/courses/featured`,{headers: { Authorization }})
             return res
         } catch(err) {
             if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err

@@ -24,7 +24,7 @@ export interface TokenResponse{
 const authService = {
     register: async (params: Register) => {
         try {
-            const res = await api.post<any, AxiosResponse<Register>>('/auth/register', params)
+            const res = await api.post<Register, AxiosResponse<Register>>('/auth/register', params)
             return res
         } catch (err) {
             console.log(err)
@@ -36,7 +36,7 @@ const authService = {
     },
     login: async (params:Login) => {
         try{
-            const res = await api.post<Login, AxiosResponse<TokenResponse>>('/auth/login', params)
+            const res = await api.post<TokenResponse, AxiosResponse<TokenResponse>>('/auth/login', params)
             if (res.status === 200) sessionStorage.setItem("onebitflix-token", res.data.token)
             return res
         } catch (err) {

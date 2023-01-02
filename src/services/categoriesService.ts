@@ -37,7 +37,7 @@ const categoriesService = {
     getWithCourses: async (id: number) =>{
         try{
             const Authorization = `Bearer ${sessionStorage.getItem("onebitflix-token")}`
-            const res = await api.get<AxiosResponse<CategoryWithCourses>>(`/categories/${id}`, {headers: { Authorization }})
+            const res = await api.get<CategoryWithCourses, AxiosResponse<CategoryWithCourses>>(`/categories/${id}`, {headers: { Authorization }})
             return res
         } catch(err) {
             if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
