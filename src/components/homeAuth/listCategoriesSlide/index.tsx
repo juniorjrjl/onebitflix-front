@@ -2,7 +2,7 @@ import styles from '../../../../styles/slideCategory.module.scss'
 import useSWR from 'swr'
 import categoriesService, { CourseFromCategory } from '../../../services/categoriesService'
 import SlideComponent from '../../common/slideComponent'
-import SpinnerComponent from '../../common/spiner'
+import SpinnerComponent from '../../common/spinner'
 
 interface proos {
     categoryId: number

@@ -4,7 +4,7 @@ import courseService, { FeaturedCourse } from '../../../services/courseService'
 import HeaderAuth from '../../common/headerAuth';
 import { Button, Container } from 'reactstrap';
 import Link from 'next/link';
-import SpinnerComponent from '../../common/spiner';
+import SpinnerComponent from '../../common/spinner';
 
 const FeaturedSection = () => {
     const { data, error } = useSWR('/featured', courseService.getFeatured)

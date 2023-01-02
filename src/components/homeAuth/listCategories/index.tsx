@@ -1,6 +1,6 @@
 import useSWR from "swr"
 import categoriesService, { CategoryOnDemmand } from "../../../services/categoriesService"
-import SpinnerComponent from "../../common/spiner"
+import SpinnerComponent from "../../common/spinner"
 import ListCategoriesSlide from "../listCategoriesSlide"
 
 const ListCategory = () =>{

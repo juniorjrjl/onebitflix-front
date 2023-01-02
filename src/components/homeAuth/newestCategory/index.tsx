@@ -2,7 +2,7 @@ import styles from '../../../../styles/slideCategory.module.scss'
 import useSWR from "swr"
 import courseService, { NewestCourse } from "../../../services/courseService"
 import SlideComponent from "../../common/slideComponent"
-import SpinnerComponent from '../../common/spiner'
+import SpinnerComponent from '../../common/spinner'
 
 const NewestCategory = () =>{
     const { data, error } = useSWR('/newest', courseService.getNewestLogged)
