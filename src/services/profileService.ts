@@ -9,6 +9,12 @@ export interface CurrentUser {
     created_at: string
 }
 
+export interface ChangePassword{
+    currentPassword: string
+    passwordConfirm: string
+    newPassword: string
+}
+
 const profileService = {
 
     fetchCurrent:  async () =>{
@@ -28,6 +34,18 @@ const profileService = {
         try{
             const Authorization = `Bearer ${sessionStorage.getItem("onebitflix-token")}`
             const res = await api.put<CurrentUser, AxiosResponse<CurrentUser>>("/users/current", params, {headers: { Authorization }})
+            return res
+        } catch(err) {
+            if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
+
+            return err.response!
+        }
+    },
+
+    changePassword: async (params: ChangePassword) => {
+        try{
+            const Authorization = `Bearer ${sessionStorage.getItem("onebitflix-token")}`
+            const res = await api.put<void, AxiosResponse<void>>("/users/current/password", params, {headers: { Authorization }})
             return res
         } catch(err) {
             if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
