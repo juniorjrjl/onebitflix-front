@@ -9,11 +9,11 @@ import courseService, { PagedCourses } from '../src/services/courseService';
 const Search = () =>{
     const router = useRouter();
     const searchName = router.query.name;
-    const [searchResult, setSearchResult] = useState<Page<PagedCourses>>()
+    const [searchResult, setSearchResult] = useState<Page<PagedCourses> | any>()
     const searchCourses =async () => {
         if (typeof searchName === "string"){
             const res = await courseService.search(searchName)
-            setSearchResult(res.data)
+            setSearchResult(res?.data)
         }
     }
     useEffect(() => {searchCourses()}, [searchName])
@@ -24,7 +24,7 @@ const Search = () =>{
         </Head>
         <main>
             <HeaderAuth />
-            {searchResult?.content?.map(course =>(
+            {searchResult?.content?.map((course: PagedCourses) =>(
                 <div key={course.id}>
                     <p>{course.name}</p>
                 </div>
