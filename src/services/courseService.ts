@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import api, { ErrorType } from "./api";
+import api, { ErrorType, Page } from "./api";
 
 
 export type NewestCourse = {
@@ -22,6 +22,13 @@ export type FeaturedCourse ={
     CategoryId: number
     createdAt: Date
     updatedAt: Date
+}
+
+export type PagedCourses = {
+    id: number
+    name: string
+    synopsis: string
+    thumbnailUrl: string
 }
 
 const courseService ={
@@ -89,6 +96,18 @@ const courseService ={
         try{
             const Authorization = `Bearer ${sessionStorage.getItem("onebitflix-token")}`
             const res = await api.get('/favorites', {headers: { Authorization }})
+            return res
+        } catch(err) {
+            if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
+
+            return err.response!
+        }
+    },
+
+    search: async (name: string) =>{
+        try{
+            const Authorization = `Bearer ${sessionStorage.getItem("onebitflix-token")}`
+            const res = await api.get<Page<PagedCourses>, AxiosResponse<Page<PagedCourses>>>(`/courses/search?name=${name}`, {headers: { Authorization }})
             return res
         } catch(err) {
             if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { Container, Form, Input } from 'reactstrap'
 import styles from './styles.module.scss'
 import Modal from 'react-modal'
-import { useEffect, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import profileService, { CurrentUser } from '../../../services/profileService'
 
@@ -14,6 +14,18 @@ const HeaderAuth = () =>{
     const handleOpenModel = () => setModalIsOpen(true)
     const handleCloseModel = () => setModalIsOpen(false)
     const [initials, setInitials] = useState("")
+    const [searchName, setSearchName] = useState("")
+
+    const handleSearch =async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        router.push(`/search?name=${searchName}`)
+        setSearchName("")
+    }
+
+    const handleSearchClick = () =>{
+        router.push(`/search?name=${searchName}`)
+        setSearchName("")
+    }
 
     useEffect(() =>{
         profileService.fetchCurrent().then(res =>{
@@ -28,6 +40,7 @@ const HeaderAuth = () =>{
         sessionStorage.clear()
         router.push('/')
     }
+
     return(
         <>
             <Container className={styles.nav}>
@@ -35,10 +48,10 @@ const HeaderAuth = () =>{
                     <img src="/logoOnebitflix.svg" alt="logoOnebitflix" className={styles.imgLogoNav} />
                 </Link>
                 <div className='d-flex align-items-center'>
-                    <Form>
-                        <Input name='search' type='search' placeholder='Pesquisar' className={styles.input}/>    
+                    <Form onSubmit={handleSearch}>
+                        <Input name='search' type='search' placeholder='Pesquisar' className={styles.input} value={searchName} onChange={event => setSearchName(event.currentTarget.value)}/>    
                     </Form>
-                    <img src="/homeAuth/iconSearch.svg" alt="lupaHeader" className={styles.searchImg}/>
+                    <img src="/homeAuth/iconSearch.svg" alt="lupaHeader" className={styles.searchImg} onClick={handleSearchClick}/>
                     <p className={styles.userProfile} onClick={handleOpenModel}>
                         {initials}
                     </p>
