@@ -1,7 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import api, { ErrorType, Page } from "./api";
 
-
 export type NewestCourse = {
     id: number
     name: string
@@ -29,6 +28,23 @@ export type PagedCourses = {
     name: string
     synopsis: string
     thumbnailUrl: string
+}
+
+export type CourseWithEpisodes = {
+    id: number
+    name: string
+    synopsis: string
+    thumbnailUrl: string
+    Episodes: EpisodeCourse[]
+}
+
+export type EpisodeCourse = {
+    id: number
+    name: string
+    synopsis: string
+    order: number
+    videoUrl: string
+    secondsLong: number
 }
 
 const courseService ={
@@ -80,6 +96,30 @@ const courseService ={
         }
     },
 
+    addToLiked: async (courseId: number | string) =>{
+        try{
+            const Authorization = `Bearer ${sessionStorage.getItem("onebitflix-token")}`
+            const res = await api.post('/likes/', {courseId}, {headers: { Authorization }, data: {courseId}})
+            return res
+        } catch(err) {
+            if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
+
+            return err.response!
+        }
+    },
+
+    removeToLiked: async (courseId: number | string) =>{
+        try{
+            const Authorization = `Bearer ${sessionStorage.getItem("onebitflix-token")}`
+            const res = await api.delete(`/likes/${courseId}`, {headers: { Authorization }, data: {courseId}})
+            return res
+        } catch(err) {
+            if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
+
+            return err.response!
+        }
+    },
+
     removeFav: async (courseId: number | string) =>{
         try{
             const Authorization = `Bearer ${sessionStorage.getItem("onebitflix-token")}`
@@ -108,6 +148,18 @@ const courseService ={
         try{
             const Authorization = `Bearer ${sessionStorage.getItem("onebitflix-token")}`
             const res = await api.get<Page<PagedCourses>, AxiosResponse<Page<PagedCourses>>>(`/courses/search?name=${name}`, {headers: { Authorization }})
+            return res
+        } catch(err) {
+            if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
+
+            return err.response!
+        }
+    },
+
+    getWithEpisodes: async (id: number | string) =>{
+        try{
+            const Authorization = `Bearer ${sessionStorage.getItem("onebitflix-token")}`
+            const res = await api.get<CourseWithEpisodes, AxiosResponse<CourseWithEpisodes>>(`/courses/${id}`, {headers: { Authorization }})
             return res
         } catch(err) {
             if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
