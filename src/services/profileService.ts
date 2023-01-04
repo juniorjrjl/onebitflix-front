@@ -21,7 +21,7 @@ const profileService = {
         try{
             const Authorization = `Bearer ${sessionStorage.getItem("onebitflix-token")}`
             const res = await api.get<CurrentUser, AxiosResponse<CurrentUser>>("/users/current", {headers: { Authorization }})
-            console.log(res)
+            
             return res
         } catch(err) {
             if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err

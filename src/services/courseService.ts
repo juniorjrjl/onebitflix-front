@@ -35,6 +35,8 @@ export type CourseWithEpisodes = {
     name: string
     synopsis: string
     thumbnailUrl: string
+    liked: boolean,
+    favorited: boolean
     Episodes: EpisodeCourse[]
 }
 
@@ -56,7 +58,6 @@ const courseService ={
         } catch(err) {
             if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
 
-            console.error(err)
             return err.response!
         }
     },
@@ -87,7 +88,7 @@ const courseService ={
     addToFav: async (courseId: number | string) =>{
         try{
             const Authorization = `Bearer ${sessionStorage.getItem("onebitflix-token")}`
-            const res = await api.post("/favorites", {headers: { Authorization }, data: {courseId}})
+            const res = await api.post("/favorites", {courseId}, {headers: { Authorization }})
             return res
         } catch(err) {
             if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
@@ -99,7 +100,7 @@ const courseService ={
     addToLiked: async (courseId: number | string) =>{
         try{
             const Authorization = `Bearer ${sessionStorage.getItem("onebitflix-token")}`
-            const res = await api.post('/likes/', {courseId}, {headers: { Authorization }, data: {courseId}})
+            const res = await api.post('/likes/', {courseId}, {headers: { Authorization }})
             return res
         } catch(err) {
             if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
@@ -111,7 +112,7 @@ const courseService ={
     removeToLiked: async (courseId: number | string) =>{
         try{
             const Authorization = `Bearer ${sessionStorage.getItem("onebitflix-token")}`
-            const res = await api.delete(`/likes/${courseId}`, {headers: { Authorization }, data: {courseId}})
+            const res = await api.delete<void, AxiosResponse<void>>(`/likes/${courseId}`, {headers: { Authorization }})
             return res
         } catch(err) {
             if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
@@ -123,7 +124,7 @@ const courseService ={
     removeFav: async (courseId: number | string) =>{
         try{
             const Authorization = `Bearer ${sessionStorage.getItem("onebitflix-token")}`
-            const res = await api.delete(`/favorites/${courseId}`, {headers: { Authorization }})
+            const res = await api.delete<void, AxiosResponse<void>>(`/favorites/${courseId}`, {headers: { Authorization }})
             return res
         } catch(err) {
             if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err

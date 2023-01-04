@@ -27,10 +27,8 @@ const authService = {
             const res = await api.post<Register, AxiosResponse<Register>>('/auth/register', params)
             return res
         } catch (err) {
-            console.log(err)
             if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
 
-            console.error(JSON.stringify(err))
             return err
         }
     },
@@ -40,10 +38,8 @@ const authService = {
             if (res.status === 200) sessionStorage.setItem("onebitflix-token", res.data.token)
             return res
         } catch (err) {
-            console.log(err)
             if (!axios.isAxiosError<AxiosError<ErrorType>>(err)) throw err
 
-            console.error(JSON.stringify(err))
             return err
         }
     }
