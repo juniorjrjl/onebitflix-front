@@ -22,6 +22,17 @@ const EpisodePlayer = () => {
 
     const playerRef = useRef<ReactPlayer>(null)
 
+    const [loading, setLoading] = useState(true)
+    const [url, setUrl] = useState('')
+
+    useEffect(() =>{
+        if (!sessionStorage.getItem("onebitflix-token")){
+            router.push('/login')
+        }else{
+            setLoading(false)
+        }
+    }, [])
+
     const handleGetEpisodeTime = async () => {
         const res = await episodeService.getWatchTime(episodeId)
 
@@ -46,6 +57,7 @@ const EpisodePlayer = () => {
 
         if (res.status === 200){
             setCourse(res.data)
+            if ('Episodes' in res.data) setUrl(`${process.env.NEXT_PUBLIC_BASEURL!}/episodes/stream?videoUrl=${res.data.Episodes[episodeOrder].videoUrl}&token=${sessionStorage.getItem("onebitflix-token")}`)
         }
     }
 
@@ -53,7 +65,7 @@ const EpisodePlayer = () => {
 
     const handleNextEpisode = () => router.push(`/course/episode/${episodeOrder + 1}?courseId=${course.id}&episodeId=${episodeId + 1}`)
 
-    if(episodeOrder + 1 <  course.Episodes.length){
+    if((course) && (episodeOrder + 1 <  course.Episodes.length)){
         if (Math.round(episodeTime) === course.Episodes[episodeOrder].secondsLong){
             handleNextEpisode()
         }
@@ -68,7 +80,7 @@ const EpisodePlayer = () => {
     useEffect(() => { handleGetEpisodeTime() }, [router])
 
     return (
-        course ?
+        course && url && !loading?
         <>
             <Head>
                 <title>Onebitflix - {course.Episodes[episodeOrder].order}</title>
@@ -80,12 +92,14 @@ const EpisodePlayer = () => {
                     <p className={styles.episodeTitle}>
                         {course.Episodes[episodeOrder].name}
                     </p>
-                    {typeof window === 'undefined' ? null : <ReactPlayer className={styles.player} 
-                        url={`${process.env.NEXT_PUBLIC_BASEURL!}/episodes/stream?videoUrl=${course.Episodes[episodeOrder].videoUrl}&token=${sessionStorage.getItem("onebitflix-token")}`}  
+                    {typeof window === 'undefined' ? null : <><ReactPlayer className={styles.player} 
+                        url={url}  
                         controls 
                         ref={playerRef}
                         onStart={handlePlayerTime}
-                        onProgress={(progress) => setEpisodeTime(progress.playedSeconds)}/>}
+                        onProgress={(progress) => setEpisodeTime(progress.playedSeconds)}/>
+                        </>
+                        }
                         <div className={styles.episodeButtonDiv}>
                             <Button className={styles.episodeButton} disabled={episodeOrder === 0} onClick={handleLastEpisode}>
                                 <img src="/episode/iconArrowLeft.svg" alt="setaEsquerda"  className={styles.arrowImg}/>
