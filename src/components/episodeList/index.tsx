@@ -9,7 +9,7 @@ interface props{
 
 const EpisodeList = ({episode, course}: props) =>{
     const router = useRouter()
-    const handleEpisodePlayer = () => router.push(`/courses/episodes/${episode.order -1}?courseId=${course.id}`)
+    const handleEpisodePlayer = () => router.push(`/courses/episodes/${episode.order -1}?courseId=${course.id}&episodeId=${episode.id}`)
     const handleSecondsToMin = (totalSeconds: number) => {
         const minutes = Math.floor(totalSeconds / 60) 
         const seconds = totalSeconds % 60
