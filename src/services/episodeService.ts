@@ -24,7 +24,7 @@ const episodeService = {
     setWatchTime :  async ({episodeId, seconds} : WatchTimeParams) =>{
         try{
             const Authorization = `Bearer ${sessionStorage.getItem("onebitflix-token")}`
-            const res = await api.post<WatchTimeParams, AxiosResponse<WatchTimeParams>>(`/episodes/${episodeId}/watchTime`, {headers: { Authorization }})
+            const res = await api.post<WatchTimeParams, AxiosResponse<WatchTimeParams>>(`/episodes/${episodeId}/watchTime`, {seconds},{headers: { Authorization }})
             
             return res
         } catch(err) {

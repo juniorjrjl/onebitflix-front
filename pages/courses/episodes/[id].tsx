@@ -23,7 +23,6 @@ const EpisodePlayer = () => {
     const playerRef = useRef<ReactPlayer>(null)
 
     const [loading, setLoading] = useState(true)
-    const [url, setUrl] = useState('')
 
     useEffect(() =>{
         if (!sessionStorage.getItem("onebitflix-token")){
@@ -34,10 +33,12 @@ const EpisodePlayer = () => {
     }, [])
 
     const handleGetEpisodeTime = async () => {
-        const res = await episodeService.getWatchTime(episodeId)
+        if (episodeId){
+            const res = await episodeService.getWatchTime(episodeId)
 
-        if (res.data !== null && 'seconds' in res.data){
-            setGetEpisodeTime(res.data.seconds)
+            if (res.data !== null && 'seconds' in res.data){
+                setGetEpisodeTime(res.data.seconds)
+            }
         }
     }
 
@@ -51,13 +52,14 @@ const EpisodePlayer = () => {
     }
 
     const getCourse =async () => {
-        if (typeof courseId !== 'string' && courseId !== '') return
+        if (typeof courseId !== 'string') {
+            return
+        }
 
         const res = await courseService.getWithEpisodes(courseId)
 
         if (res.status === 200){
             setCourse(res.data)
-            if ('Episodes' in res.data) setUrl(`${process.env.NEXT_PUBLIC_BASEURL!}/episodes/stream?videoUrl=${res.data.Episodes[episodeOrder].videoUrl}&token=${sessionStorage.getItem("onebitflix-token")}`)
         }
     }
 
@@ -80,7 +82,7 @@ const EpisodePlayer = () => {
     useEffect(() => { handleGetEpisodeTime() }, [router])
 
     return (
-        course && url && !loading?
+        course && !loading?
         <>
             <Head>
                 <title>Onebitflix - {course.Episodes[episodeOrder].order}</title>
@@ -93,7 +95,7 @@ const EpisodePlayer = () => {
                         {course.Episodes[episodeOrder].name}
                     </p>
                     {typeof window === 'undefined' ? null : <><ReactPlayer className={styles.player} 
-                        url={url}  
+                        url={`${process.env.NEXT_PUBLIC_BASEURL!}/episodes/stream?videoUrl=${course.Episodes[episodeOrder].videoUrl}&token=${sessionStorage.getItem("onebitflix-token")}`}
                         controls 
                         ref={playerRef}
                         onStart={handlePlayerTime}
