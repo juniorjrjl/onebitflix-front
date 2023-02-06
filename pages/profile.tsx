@@ -12,22 +12,9 @@ import styles from '../styles/profile.module.scss'
 const UseInfo = () =>{
 
     const router = useRouter()
-    const [loading, setLoading] = useState(true)
-
-    useEffect(() =>{
-        if (!sessionStorage.getItem("onebitflix-token")){
-            router.push('/login')
-        }else{
-            setLoading(false)
-        }
-    }, [])
 
     const [form, setForm] = useState("userForm")
     return(
-        loading ?
-        <>
-            <SpinnerComponent />
-        </> :
         <>
             <Head>
                 <title>Onebitflix - Meus dados</title>

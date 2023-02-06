@@ -21,22 +21,8 @@ const Search = () =>{
         }
     }
 
-    const [loading, setLoading] = useState(true)
-
-    useEffect(() =>{
-        if (!sessionStorage.getItem("onebitflix-token")){
-            router.push('/login')
-        }else{
-            setLoading(false)
-        }
-    }, [])
-
     useEffect(() => {searchCourses()}, [searchName])
     return(
-        loading ?
-        <>
-            <SpinnerComponent />
-        </> :
         <>
             <Head>
                 <title>Onebitflix - {searchName}</title>

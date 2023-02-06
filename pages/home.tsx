@@ -11,21 +11,8 @@ import NewestCategory from "../src/components/homeAuth/newestCategory"
 
 const HomeAuth = () =>{
     const router = useRouter()
-    const [loading, setLoading] = useState(true)
-
-    useEffect(() =>{
-        if (!sessionStorage.getItem("onebitflix-token")){
-            router.push('/login')
-        }else{
-            setLoading(false)
-        }
-    }, [])
 
     return(
-        loading ?
-        <>
-            <SpinnerComponent />
-        </> :
         <>
             <Head>
                 <title>Onebitflix - Home</title>
