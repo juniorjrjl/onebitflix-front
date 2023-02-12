@@ -20,7 +20,8 @@ crie a network configurada no docker-compose.yml (onebitflix-net) usando o segui
 
 ```
 docker network create "onebitflix-net"
-``
+````
+
 rode o seguinte comando no terminal:
 
 ```

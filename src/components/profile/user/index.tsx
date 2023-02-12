@@ -6,6 +6,7 @@ import styles from '../../../../styles/profile.module.scss'
 import profileService, { CurrentUser } from '../../../services/profileService'
 import ToastComponent from '../../common/toast'
 import moment, { locale } from 'moment'
+import { IMaskInput, useIMask } from 'react-imask'
 import "moment/locale/pt-br";
 
 const UserForm = () =>{
@@ -35,6 +36,7 @@ const UserForm = () =>{
     }, [])
     const handleUserUpdate =async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
+        console.log(phone)
         const res = await profileService.update({firstName, lastName, phone, email, created_at: createdAt})
         if (res.status === 200){
             setToastMessage('Informações alteradas com sucesso')
@@ -78,8 +80,8 @@ const UserForm = () =>{
                 <div className={styles.inputNormalDiv}>
                     <FormGroup>
                         <Label for='phone' className={styles.label}>Whatsapp / Telegram</Label>
-                        <Input name='phone' type='tel' id='phone' placeholder='(xx) 9xxxx-xxxx' required maxLength={20} className={styles.input} 
-                            value={phone} onChange={(event) =>  setPhone(event.target.value)}/>
+                        <IMaskInput mask="(00) 90000-0000" name='phone' type='tel' id='phone' placeholder='(xx) 9xxxx-xxxx' required maxLength={20} className={`${styles.input} form-control`} 
+                            value={phone} onChange={(event: any) => setPhone(event.target.value)} />
                     </FormGroup>
                     <FormGroup>
                         <Label for='email' className={styles.label}>Whatsapp / Telegram</Label>
