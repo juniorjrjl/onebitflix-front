@@ -61,8 +61,8 @@ const CoursePage = () => {
     }
 
     const getEpisodesLenghtText = () => {
-        if (!course.Episodes) return ''
-        return `${course.Episodes.length} episódio${course.Episodes.length !== 1 ? 's' : ''}`
+        if (!course.episodes) return ''
+        return `${course.episodes.length} episódio${course.episodes.length !== 1 ? 's' : ''}`
     }
 
     useEffect(() => { getCourse() } , [id])
@@ -87,7 +87,7 @@ const CoursePage = () => {
                 <Container className={styles.courseInfo}>
                     <p className={styles.courseTitle}>{course?.name}</p>
                     <p className={styles.courseDescription}>{course?.synopsis}</p>
-                    <Button outline className={styles.courseBtn} disabled={course.Episodes.length === 0}>
+                    <Button outline className={styles.courseBtn} disabled={course.episodes.length === 0}>
                         Assistir Agora
                         <img src="/buttonPlay.svg" alt="buttomImg" className={styles.buttonImg}/>
                     </Button>
@@ -99,11 +99,11 @@ const CoursePage = () => {
                 <Container className={styles.episodeInfo}>
                     <p className={styles.episodeDivision}>Episódios</p>
                     <p className={styles.episodeLenght}>{getEpisodesLenghtText()}</p>
-                    {course.Episodes.length === 0 ? 
+                    {course.episodes.length === 0 ? 
                         <p>
                             <strong>Não temos episódios nesse curso ainda, aguarde</strong>
                         </p>: 
-                        course.Episodes?.map((episode: EpisodeCourse) => <EpisodeList key={episode.id} episode={episode} course={course}/>)}
+                        course.episodes?.map((episode: EpisodeCourse) => <EpisodeList key={episode.id} episode={episode} course={course}/>)}
                 </Container>
                 <Footer />
             </main>

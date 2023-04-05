@@ -2,7 +2,7 @@ import { Splide, SplideSlide } from '@splidejs/react-splide'
 import '@splidejs/splide/dist/css/splide.min.css'
 import SlideCard from '../slideCard'
 
-export type Couresslide = {
+export type CouresSlide = {
     id: number
     name: string
     thumbnailUrl: string
@@ -10,7 +10,7 @@ export type Couresslide = {
 }
 
 interface props {
-    courses: Couresslide[]
+    courses: CouresSlide[]
 }
 
 const slideComponent = ({courses} : props) =>{

@@ -67,8 +67,8 @@ const EpisodePlayer = () => {
 
     const handleNextEpisode = () => router.push(`/course/episode/${episodeOrder + 1}?courseId=${course.id}&episodeId=${episodeId + 1}`)
 
-    if((course) && (episodeOrder + 1 <  course.Episodes.length)){
-        if (Math.round(episodeTime) === course.Episodes[episodeOrder].secondsLong){
+    if((course) && (episodeOrder + 1 <  course.episodes.length)){
+        if (Math.round(episodeTime) === course.episodes[episodeOrder].secondsLong){
             handleNextEpisode()
         }
     }
@@ -85,17 +85,17 @@ const EpisodePlayer = () => {
         course && !loading?
         <>
             <Head>
-                <title>Onebitflix - {course.Episodes[episodeOrder].order}</title>
+                <title>Onebitflix - {course.episodes[episodeOrder].order}</title>
                 <link rel="shortcut icon" href="/favicon.svg" type="image/x-icon" />
             </Head>
             <main>
                 <HeaderGeneric logoUrl="/home" btnContent={'Voltar para o curso' } btnUrl={`/courses/${courseId}`}/>
                 <Container className="d-flex flex-column align-items-center gap-3 pt-3">
                     <p className={styles.episodeTitle}>
-                        {course.Episodes[episodeOrder].name}
+                        {course.episodes[episodeOrder].name}
                     </p>
                     {typeof window === 'undefined' ? null : <><ReactPlayer className={styles.player} 
-                        url={`${process.env.NEXT_PUBLIC_BASEURL!}/episodes/stream?videoUrl=${course.Episodes[episodeOrder].videoUrl}&token=${sessionStorage.getItem("onebitflix-token")}`}
+                        url={`${process.env.NEXT_PUBLIC_BASEURL!}/episodes/stream?videoUrl=${course.episodes[episodeOrder].videoUrl}&token=${sessionStorage.getItem("onebitflix-token")}`}
                         controls 
                         ref={playerRef}
                         onStart={handlePlayerTime}
@@ -106,12 +106,12 @@ const EpisodePlayer = () => {
                             <Button className={styles.episodeButton} disabled={episodeOrder === 0} onClick={handleLastEpisode}>
                                 <img src="/episode/iconArrowLeft.svg" alt="setaEsquerda"  className={styles.arrowImg}/>
                             </Button>
-                            <Button className={styles.episodeButton} disabled={episodeOrder + 1 === course.Episodes.length} onClick={handleNextEpisode}>
+                            <Button className={styles.episodeButton} disabled={episodeOrder + 1 === course.episodes.length} onClick={handleNextEpisode}>
                                 <img src="/episode/iconArrowRight.svg" alt="setaDireita"  className={styles.arrowImg}/>
                             </Button>
                         </div>
                         <p className="text-center py-4">
-                            {course.Episodes[episodeOrder].synopsis}
+                            {course.episodes[episodeOrder].synopsis}
                         </p>
                 </Container>
             </main>

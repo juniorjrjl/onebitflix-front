@@ -1,10 +1,10 @@
 import styles from './styles.module.scss'
 
 import Link from 'next/link'
-import { Couresslide } from '../slideComponent'
+import { CouresSlide } from '../slideComponent'
 
 interface props {
-    course: Couresslide
+    course: CouresSlide
 }
 
 const slideCard = ({course}: props) =>{

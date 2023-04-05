@@ -31,13 +31,13 @@ const UserForm = () =>{
             setPhone(user.phone)
             setEmail(user.email)
             setInitialEmail(user.email)
-            setCreatedAt(user.created_at)
+            setCreatedAt(user.createdAt)
         })
     }, [])
     const handleUserUpdate =async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         console.log(phone)
-        const res = await profileService.update({firstName, lastName, phone, email, created_at: createdAt})
+        const res = await profileService.update({firstName, lastName, phone, email, createdAt})
         if (res.status === 200){
             setToastMessage('Informações alteradas com sucesso')
             setToastColor('success')

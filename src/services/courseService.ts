@@ -7,7 +7,7 @@ export type NewestCourse = {
     synopsis: string
     thumbnailUrl: string
     featured: boolean
-    CategoryId: number
+    categoryId: number
     createdAt: Date
     updatedAt: Date
 };
@@ -18,7 +18,7 @@ export type FeaturedCourse ={
     synopsis: string
     thumbnailUrl: string
     featured: boolean
-    CategoryId: number
+    categoryId: number
     createdAt: Date
     updatedAt: Date
 }
@@ -37,7 +37,7 @@ export type CourseWithEpisodes = {
     thumbnailUrl: string
     liked: boolean,
     favorited: boolean
-    Episodes: EpisodeCourse[]
+    episodes: EpisodeCourse[]
 }
 
 export type EpisodeCourse = {

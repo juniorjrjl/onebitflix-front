@@ -10,7 +10,7 @@ export type CategoryOnDemmand = {
 export type CategoryWithCourses ={
     id: number
     name: string
-    Courses?: CourseFromCategory[] 
+    courses?: CourseFromCategory[] 
 }
 
 export type CourseFromCategory = {
